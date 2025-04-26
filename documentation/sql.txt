@@ -1,0 +1,43 @@
+-- Example database schema for the workspace tables
+
+CREATE TABLE profiles (
+  id UUID PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  full_name VARCHAR(255),
+  avatar_url TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE TABLE tournaments (
+  id UUID PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  start_date DATE,
+  end_date DATE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE TABLE registrations (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  tournament_id UUID REFERENCES tournaments(id) ON DELETE CASCADE,
+  registered_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE TABLE friends (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  friend_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+CREATE TABLE messages (
+  id UUID PRIMARY KEY,
+  sender_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  recipient_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  content TEXT NOT NULL,
+  sent_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
