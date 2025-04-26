@@ -1,9 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
-=======
-import React, { useState, useEffect, ChangeEvent } from "react";
->>>>>>> b3ce105 (Version)
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -11,10 +7,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Filter, Search, Copy } from "lucide-react";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
 import { useState, useEffect, ChangeEvent } from "react";
-=======
->>>>>>> b3ce105 (Version)
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
@@ -41,7 +34,6 @@ export default function TournamentsPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-<<<<<<< HEAD
     // Fetch tournaments from Supabase
     async function fetchTournaments() {
       const { data, error } = await supabase.from("tournaments").select("*");
@@ -59,27 +51,6 @@ export default function TournamentsPage() {
 
     return () => clearInterval(interval);
   }, []);
-=======
-    async function fetchTournaments() {
-      let query = supabase.from("tournaments").select("*");
-      if (search.trim() !== "") {
-        query = query.ilike("name", `%${search}%`);
-      }
-      const { data, error } = await query;
-      if (error) {
-        console.error("Error fetching tournaments:", error);
-        setTournaments([]);
-      } else {
-        setTournaments((data as Tournament[]) || []);
-      }
-    }
-    fetchTournaments();
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000);
-    return () => clearInterval(interval);
-  }, [search]);
->>>>>>> b3ce105 (Version)
 
   const handleJoinNow = (code?: string) => {
     setRoomCode(code || "N/A");
@@ -91,7 +62,6 @@ export default function TournamentsPage() {
     alert("Room code copied to clipboard!");
   };
 
-<<<<<<< HEAD
   // Search filter
   const filteredTournaments = tournaments.filter((tournament) =>
     tournament.name.toLowerCase().includes(search.toLowerCase())
@@ -99,12 +69,6 @@ export default function TournamentsPage() {
 
   // Placeholder: filter tournaments where user has a role (registered)
   const registeredTournaments = tournaments.filter((t) => t.role);
-=======
-  const filteredTournaments = tournaments;
-
-  // Placeholder: filter tournaments where user has a role (registered)
-  const registeredTournaments = tournaments.filter((t: Tournament) => t.role);
->>>>>>> b3ce105 (Version)
 
   return (
     <div className="flex min-h-screen flex-col bg-black">
@@ -136,11 +100,7 @@ export default function TournamentsPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-<<<<<<< HEAD
             {filteredTournaments.map((tournament, i) => (
-=======
-            {filteredTournaments.map((tournament: Tournament, i: number) => (
->>>>>>> b3ce105 (Version)
               <div key={tournament.id} className="group relative overflow-hidden rounded-lg border border-steel-gray bg-steel-dark">
                 <div className="relative aspect-[16/9] overflow-hidden">
                   <Image
@@ -197,11 +157,7 @@ export default function TournamentsPage() {
               {registeredTournaments.length === 0 && (
                 <div className="py-4 text-center text-gray-500">No registered tournaments found.</div>
               )}
-<<<<<<< HEAD
               {registeredTournaments.map((tournament) => {
-=======
-              {registeredTournaments.map((tournament: Tournament) => {
->>>>>>> b3ce105 (Version)
                 const hoursLeft = Math.max(0, Math.ceil((new Date(tournament.start_time).getTime() - currentTime.getTime()) / 3600000));
                 const isJoinAvailable =
                   hoursLeft <= 1 && new Date(tournament.start_time).getTime() > currentTime.getTime();
